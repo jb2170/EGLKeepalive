@@ -23,15 +23,19 @@ def main() -> None:
 
     delay_s: float = args.delay_s
 
+    print("Acquiring standalone EGL context...", end = " ", flush = True)
     gl = mgl.create_context(standalone = True, backend = "egl")
+    print("Ready")
+
     keepalive_buffer = gl.buffer(reserve = 256)
 
     try:
+        print("Idling")
         while True:
             keepalive_buffer.read()
             gl.finish()
             time.sleep(delay_s)
     except KeyboardInterrupt:
-        pass
+        print("Shutting down")
 
     gl.release()
