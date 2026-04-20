@@ -12,7 +12,7 @@ import moderngl as mgl
 def get_cli_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description = __doc__)
 
-    parser.add_argument("delay_s", metavar = "DELAY", nargs = "?", type = int, default = 1)
+    parser.add_argument("delay_s", metavar = "DELAY", nargs = "?", type = float, default = 1.0)
 
     args = parser.parse_args()
 
@@ -21,7 +21,7 @@ def get_cli_args() -> argparse.Namespace:
 def main() -> None:
     args = get_cli_args()
 
-    delay_s = args.delay_s
+    delay_s: float = args.delay_s
 
     gl = mgl.create_context(standalone = True, backend = "egl")
     keepalive_buffer = gl.buffer(reserve = 256)
