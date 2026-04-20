@@ -4,8 +4,9 @@ Keep a GPU from sleeping by nudging an EGL context
 
 __version__ = "0.0.1"
 
-import argparse
 import time
+import signal
+import argparse
 
 import moderngl as mgl
 
@@ -18,10 +19,15 @@ def get_cli_args() -> argparse.Namespace:
 
     return args
 
+def on_sigterm(*args):
+    raise KeyboardInterrupt
+
 def main() -> None:
     args = get_cli_args()
 
     delay_s: float = args.delay_s
+
+    signal.signal(signal.SIGTERM, on_sigterm)
 
     print("Acquiring standalone EGL context...", end = " ", flush = True)
     gl = mgl.create_context(standalone = True, backend = "egl")
