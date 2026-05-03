@@ -1,6 +1,6 @@
 """
 Keep a GPU from sleeping by nudging an EGL context
-""".removeprefix("\n")
+"""
 
 __version__ = "1.0.0"
 
