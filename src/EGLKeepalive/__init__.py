@@ -2,7 +2,7 @@
 Keep a GPU from sleeping by nudging an EGL context
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 import time
 import signal
