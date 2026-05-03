@@ -13,7 +13,9 @@ import moderngl as mgl
 def get_cli_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description = __doc__)
 
-    parser.add_argument("delay_s", metavar = "DELAY", nargs = "?", type = float, default = 1.0)
+    parser.add_argument("delay_s", metavar = "DELAY", nargs = "?",
+                        type = float, default = 1.0,
+                        help = "How often to nudge the context to keep it alive")
 
     args = parser.parse_args()
 
