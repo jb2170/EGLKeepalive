@@ -14,21 +14,27 @@ $ pipx install EGLKeepalive
 
 ## Example effect
 
+Make use of the `GLCONTEXT_DEVICE_INDEX` environment variable on the command line, that overrides which graphics card / device that EGL chooses. Our Python code uses
+
+```py
+gl = mgl.create_context(standalone = True, backend = "egl")
+```
+
+but with `GLCONTEXT_DEVICE_INDEX=67` on the command line is equivalent to
+
+```py
+gl = mgl.create_context(standalone = True, backend = "egl", device_index = 67)
+```
+
+so have a play with different `GLCONTEXT_DEVICE_INDEX=123` to get it to work.
+
 ```
 $ cat /sys/class/drm/card*/device/power_state
 D3cold
 D0
 $ # lazy Nvidia GPU is fast asleep; power saving or something...
 
-$ DRI_PRIME=0 glxinfo | grep "OpenGL renderer"
-OpenGL renderer string: Mesa Intel(R) HD Graphics 630 (KBL GT2)
-$ # not this one
-
-$ DRI_PRIME=1 glxinfo | grep "OpenGL renderer"
-OpenGL renderer string: NV136
-$ # this one, so use DRI_PRIME=1
-
-$ DRI_PRIME=1 egl-keepalive &
+$ GLCONTEXT_DEVICE_INDEX=1 egl-keepalive &
 $ # wakey wakey
 
 $ cat /sys/class/drm/card*/device/power_state
